@@ -163,6 +163,14 @@ class Order extends CI_Controller {
         echo json_encode($status);
     }
 
+    public function queryUnitWeightByID($orderID)
+    {
+        $this->load->model('ordermodel');
+
+        $query = $this->ordermodel->queryUnitWeightByIDData($orderID);
+        echo json_encode($query);
+    }
+
     public function getSerialNumber()
     {
         $this->load->helper('file');

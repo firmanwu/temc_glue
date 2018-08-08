@@ -92,6 +92,17 @@ class Ordermodel extends CI_Model {
         return $result->row_array();
     }
 
+    public function queryUnitWeightByIDData($orderID)
+    {
+        $this->db->select('packaging.unitWeight');
+        $this->db->from('order');
+        $this->db->join('packaging', 'order.packaging = packaging.packagingID');
+        $this->db->where('order.orderID', $orderID);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
+
     public function deleteOrderData($orderData)
     {
         $this->db->where('orderID', $orderData['orderID']);
