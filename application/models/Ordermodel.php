@@ -23,7 +23,8 @@ class Ordermodel extends CI_Model {
             order.expectingPackageNumber,
             order.expectingWeight,
             order.remainingPackageNumber,
-            order.remainingWeight');
+            order.remainingWeight,
+            order.complete');
         $this->db->from('order');
         $this->db->join('product', 'order.product = product.productID');
         $this->db->join('customer', 'order.customer = customer.customerID');
@@ -62,6 +63,7 @@ class Ordermodel extends CI_Model {
         $this->db->select('orderID');
         $this->db->from('order');
         $this->db->where('remainingWeight >', 0);
+        $this->db->where('complete =', 0);
         $result = $this->db->get();
 
         return $result;
@@ -116,6 +118,13 @@ class Ordermodel extends CI_Model {
         $this->db->set('remainingWeight', 'remainingWeight + ' . (-$productionData['producedWeight']), FALSE);
         $this->db->set('remainingPackageNumber', 'remainingPackageNumber + ' . (-$productionData['producedPackageNumber']), FALSE);
         $this->db->where('orderID', $productionData['order']);
+        $this->db->update('order');
+    }
+
+    public function completeOrderData($orderID)
+    {
+        $this->db->set('complete', 1);
+        $this->db->where('orderID', $orderID);
         $this->db->update('order');
     }
 }

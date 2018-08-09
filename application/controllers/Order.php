@@ -238,6 +238,13 @@ class Order extends CI_Controller {
         }
     }
 
+    public function completeOrder($orderID)
+    {
+        $this->load->model('ordermodel');
+
+        $result = $this->ordermodel->completeOrderData($orderID);
+    }
+
     public function deleteOrder($orderID)
     {
         $this->load->model('ordermodel');
