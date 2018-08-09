@@ -98,8 +98,8 @@ $(document).ready(function(){
     var postData = 
                 {
                     "model":"ordermodel",
-                    "queryfunction":"queryOrderAllData",
-                    "header":["訂單編號", "交期", "內/外銷", "產品", "包裝", "客戶", "生產重量", "生產數量", "尚欠重量", "尚欠數量"]
+                    "queryfunction":"queryOrderAllDataExcel",
+                    "header":["工單編號", "訂單編號", "交期", "內/外銷", "產品", "包裝", "客戶", "生產重量", "生產數量", "尚欠重量", "尚欠數量"]
                 } 
 
     $('.download-order-excel').click( function(e) {

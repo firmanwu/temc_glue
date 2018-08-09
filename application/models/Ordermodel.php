@@ -34,6 +34,29 @@ class Ordermodel extends CI_Model {
         return $result;
     }
 
+    public function queryOrderAllDataExcel()
+    {
+        $this->db->select('
+            order.orderID,
+            order.customerOrderID,
+            order.deadline,
+            order.sales,
+            product.productName,
+            customer.customerName,
+            packaging.packaging,
+            order.expectingPackageNumber,
+            order.expectingWeight,
+            order.remainingPackageNumber,
+            order.remainingWeight');
+        $this->db->from('order');
+        $this->db->join('product', 'order.product = product.productID');
+        $this->db->join('customer', 'order.customer = customer.customerID');
+        $this->db->join('packaging', 'order.packaging = packaging.packagingID');
+        $result = $this->db->get();
+
+        return $result;
+    }
+
     public function queryOrderByIDData($orderID)
     {
         $this->db->select('
