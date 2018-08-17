@@ -23,6 +23,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
 </style>
 <script>
+function calculateWeight() {
+    // Calculate the weight according to the expecting package number
+    var packagingID = $('select#packagingInOrder').find("option:selected").val();
+    var packageNumber = $('input[name="expectingPackageNumber"]').val();
+    if (("請選擇" != packagingID) && ('' != packageNumber)) {
+        $.ajax({
+            url: "/packaging/queryUnitWeightByID/" + packagingID,
+            type: "POST",
+            success: function(result) {
+                $('#orderWeightTable').remove();
+                var row = JSON.parse(result);
+                var header = ["生產重量"];
+                var table = $(document.createElement('table'));
+                table.attr('id', 'orderWeightTable');
+                table.appendTo($('#orderWeightList'));
+                var tr = $(document.createElement('tr'));
+                tr.appendTo(table);
+                for(var i in header)
+                {
+                    var th = $(document.createElement('th'));
+                    th.text(header[i]);
+                    th.appendTo(tr);
+                }
+
+                tr = $(document.createElement('tr'));
+                tr.appendTo(table);
+                for(var j in row)
+                {
+                    if ("unitWeight" == j) {
+                        var expectingWeight = row[j];
+                    }
+
+                    td = $(document.createElement('td'));
+                    td.text((expectingWeight * packageNumber));
+                    td.appendTo(tr);
+                }
+            }
+        });
+    }
+    event.preventDefault();
+}
+
 $(document).ready(function() {
     function autoGenerateOrderID() {
         $.ajax({
@@ -114,46 +156,6 @@ $(document).ready(function() {
         });
     }
     autoFillCustomer();
-
-    $('input[name="expectingPackageNumber"]').focusout(function(){
-        var packagingID = $('select#packagingInOrder').find("option:selected").val();
-        var packageNumber = $('input[name="expectingPackageNumber"]').val();
-        if (("請選擇" != packagingID) && ('' != packageNumber)) {
-            $.ajax({
-                url: "/packaging/queryUnitWeightByID/" + packagingID,
-                type: "POST",
-                success: function(result) {
-                    $('#orderWeightTable').remove();
-                    var row = JSON.parse(result);
-                    var header = ["生產重量"];
-                    var table = $(document.createElement('table'));
-                    table.attr('id', 'orderWeightTable');
-                    table.appendTo($('#orderWeightList'));
-                    var tr = $(document.createElement('tr'));
-                    tr.appendTo(table);
-                    for(var i in header)
-                    {
-                        var th = $(document.createElement('th'));
-                        th.text(header[i]);
-                        th.appendTo(tr);
-                    }
-
-                    tr = $(document.createElement('tr'));
-                    tr.appendTo(table);
-                    for(var j in row)
-                    {
-                        if ("unitWeight" == j) {
-                            var expectingWeight = row[j];
-                        }
-
-                        td = $(document.createElement('td'));
-                        td.text((expectingWeight * packageNumber));
-                        td.appendTo(tr);
-                    }
-                }
-            });
-        }
-    })
 
     $('#addOrderForm').submit(function(event) {
         var formData = $('#addOrderForm').serialize();
@@ -288,6 +290,9 @@ $(document).ready(function() {
         生產數量
         <input type="text" name="expectingPackageNumber">
         <div id="orderWeightList"></div>
+        <div class="selfButtonB" onclick="calculateWeight()">計算重量</button>
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         <br>
         <input type="submit" value="確定" data-role="button">
         <input type="reset" value="新增" data-role="button">
