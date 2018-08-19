@@ -90,6 +90,76 @@ class Production extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function queryProductionStatus()
+    {
+        $this->load->model('productiontargetmodel');
+        $this->load->model('productionmodel');
+
+        $productionStatus = array();
+        $targetData = $this->productiontargetmodel->queryProductionTargetByYear();
+        $yearlyData['yearlyTotalWeight'] = $targetData['yearlyTotalWeight'];
+        $yearlyProduction = $this->productionmodel->queryProductionProducedWeightSum(0);
+        if (isset($yearlyProduction['producedWeight'])) {
+            $yearlyData['yearlyProducedWeight'] = $yearlyProduction['producedWeight'];
+            $yearlyData['achievedRate'] = $yearlyData['yearlyProducedWeight'] / $yearlyData['yearlyTotalWeight'];
+        }
+        else {
+            $yearlyData['yearlyProducedWeight'] = 0;
+            $yearlyData['achievedRate'] = 0;
+        }
+        $productionStatus[] = $yearlyData;
+
+        $q1Data['quarterOneTotalWeight'] = $targetData['quarterOneTotalWeight'];
+        $q1Production = $this->productionmodel->queryProductionProducedWeightSum(1);
+        if (isset($q1Production['producedWeight'])) {
+            $q1Data['q1ProducedWeight'] = $q1Production['producedWeight'];
+            $q1Data['achievedRate'] = $q1Data['q1ProducedWeight'] / $q1Data['quarterOneTotalWeight'];
+        }
+        else {
+            $q1Data['q1ProducedWeight'] = 0;
+            $q1Data['achievedRate'] = 0;
+        }
+        $productionStatus[] = $q1Data;
+
+        $q2Data['quarterTwoTotalWeight'] = $targetData['quarterTwoTotalWeight'];
+        $q2Production = $this->productionmodel->queryProductionProducedWeightSum(2);
+        if (isset($q2Production['producedWeight'])) {
+            $q2Data['q2ProducedWeight'] = $q2Production['producedWeight'];
+            $q2Data['achievedRate'] = $q2Data['q2ProducedWeight'] / $q2Data['quarterTwoTotalWeight'];
+        }
+        else {
+            $q2Data['q2ProducedWeight'] = 0;
+            $q2Data['achievedRate'] = 0;
+        }
+        $productionStatus[] = $q2Data;
+
+        $q3Data['quarterThreeTotalWeight'] = $targetData['quarterThreeTotalWeight'];
+        $q3Production = $this->productionmodel->queryProductionProducedWeightSum(3);
+        if (isset($q3Production['producedWeight'])) {
+            $q3Data['q3ProducedWeight'] = $q3Production['producedWeight'];
+            $q3Data['achievedRate'] = $q3Data['q3ProducedWeight'] / $q3Data['quarterThreeTotalWeight'];
+        }
+        else {
+            $q3Data['q3ProducedWeight'] = 0;
+            $q3Data['achievedRate'] = 0;
+        }
+        $productionStatus[] = $q3Data;
+
+        $q4Data['quarterFourTotalWeight'] = $targetData['quarterFourTotalWeight'];
+        $q4Production = $this->productionmodel->queryProductionProducedWeightSum(4);
+        if (isset($q4Production['producedWeight'])) {
+            $q4Data['q4ProducedWeight'] = $q4Production['producedWeight'];
+            $q4Data['achievedRate'] = $q4Data['q4ProducedWeight'] / $q4Data['quarterFourTotalWeight'];
+        }
+        else {
+            $q4Data['q4ProducedWeight'] = 0;
+            $q4Data['achievedRate'] = 0;
+        }
+        $productionStatus[] = $q4Data;
+
+        echo json_encode($productionStatus);
+    }
+
     public function downloadProductionExcel($filterByDate = 0)
     {
         $obj = $this->input->post('excelBuildData');

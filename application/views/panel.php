@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <h3>生產資料</h3>
             <a href="<?php echo base_url('order/addOrderView');?>" data-role="button" data-icon="flat-new" data-theme="b">訂單管理</a>
             <a href="<?php echo base_url('production/addProductionView');?>" data-role="button" data-icon="flat-new" data-theme="b">生產管理</a>
+            <a href="<?php echo base_url('productiontarget/addProductionTargetView');?>" data-role="button" data-icon="flat-new" data-theme="b">年度季度目標管理</a>
             <a href="<?php echo base_url('status/displayStatusView');?>" data-role="button" data-icon="flat-new" data-theme="b">生產狀態顯示</a>
         </div>
 

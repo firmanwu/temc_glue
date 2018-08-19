@@ -43,6 +43,40 @@ class Productionmodel extends CI_Model {
         return $result->row_array();
     }
 
+    public function queryProductionProducedWeightSum($quarter)
+    {
+        $year = date("Y");
+        switch($quarter) {
+            case 0:
+                $yearStart = $year . "-01-01";
+                $yearEnd = $year . "-12-31";
+                break;
+            case 1:
+                $yearStart = $year . "-01-01";
+                $yearEnd = $year . "-03-31";
+                break;
+            case 2:
+                $yearStart = $year . "-04-01";
+                $yearEnd = $year . "-06-31";
+                break;
+            case 3:
+                $yearStart = $year . "-07-01";
+                $yearEnd = $year . "-09-31";
+                break;
+            case 4:
+                $yearStart = $year . "-10-01";
+                $yearEnd = $year . "-12-31";
+                break;
+        }
+        $this->db->select_sum('producedWeight');
+        $this->db->from('production');
+        $this->db->where('producingDate >=', $yearStart);
+        $this->db->where('producingDate <=', $yearEnd);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
+
     public function deleteProductionData($productionData)
     {
         $this->db->where('productionID', $productionData['productionID']);
