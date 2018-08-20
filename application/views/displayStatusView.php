@@ -9,7 +9,7 @@ function queryStatus() {
         success: function(result) {
             $('#queryStatusTable').remove();
             var row = JSON.parse(result);
-            var header = ["產品型號", "訂單所需總重量", "已生產重量", "尚欠重量"];
+            var header = ["產品型號", "訂單所需總重量", "本日已生產重量", "尚欠重量"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryStatusTable');
             table.appendTo($('#queryStatusList'));
@@ -38,7 +38,6 @@ function queryStatus() {
             sortable_headers();
         }
     });
-    event.preventDefault();
 }
 queryStatus();
 

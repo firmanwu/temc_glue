@@ -38,6 +38,7 @@ class Productionmodel extends CI_Model {
         $this->db->from('production');
         $this->db->join('order', 'production.order = order.orderID');
         $this->db->where('order.product', $productID);
+        $this->db->where('production.producingDate', gmdate("Y-m-d", (time() + (28800))));
         $result = $this->db->get();
 
         return $result->row_array();

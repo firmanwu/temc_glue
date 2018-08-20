@@ -153,9 +153,26 @@ class Order extends CI_Controller {
             $queryOrder = $this->ordermodel->queryOrderExpectingRemainingWeightSumByProductIDData($row['productID']);
             $queryProduction = $this->productionmodel->queryProductionProducedWeightSumByProductIDData($row['productID']);
 
-            $listData['expectingWeight'] = $queryOrder['expectingWeight'];
-            $listData['producedWeight'] = $queryProduction['producedWeight'];
-            $listData['remainingWeight'] = $queryOrder['remainingWeight'];
+            if (isset($queryOrder['expectingWeight'])) {
+                $listData['expectingWeight'] = $queryOrder['expectingWeight'];
+            }
+            else {
+                $listData['expectingWeight'] = 0;
+            }
+
+            if (isset($queryProduction['producedWeight'])) {
+                $listData['producedWeight'] = $queryProduction['producedWeight'];
+            }
+            else {
+                $listData['producedWeight'] = 0;
+            }
+
+            if (isset($queryOrder['remainingWeight'])) {
+                $listData['remainingWeight'] = $queryOrder['remainingWeight'];
+            }
+            else {
+                $listData['remainingWeight'] = 0;
+            }
 
             // Add each array into one array
             $status[] = $listData;
