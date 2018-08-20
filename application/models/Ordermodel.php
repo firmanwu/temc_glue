@@ -29,6 +29,7 @@ class Ordermodel extends CI_Model {
         $this->db->join('product', 'order.product = product.productID');
         $this->db->join('customer', 'order.customer = customer.customerID');
         $this->db->join('packaging', 'order.packaging = packaging.packagingID');
+        $this->db->where('order.complete', 0);
         $result = $this->db->get();
 
         return $result;
