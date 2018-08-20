@@ -9,7 +9,6 @@ function queryProductionTarget() {
         success: function(result) {
             $('#queryProductionTargetStatusTable').remove();
             var row = JSON.parse(result);
-            //var headerList = ["Year", "Q1", "Q2", "Q3", "Q4"];
             var headerYear = ["年目標生產總重量", "年實際生產總重量", "年目標達成率"];
             var headerQ1 = ["第一季目標生產總重量", "第一季實際生產總重量", "年目標達成率"];
             var headerQ2 = ["第二季目標生產總重量", "第二季實際生產總重量", "年目標達成率"];
