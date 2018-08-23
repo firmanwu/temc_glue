@@ -10,9 +10,25 @@ class Productiontargetmodel extends CI_Model {
         return $result;
     }
 
+    public function updateProductionTargetData($productionTargetData)
+    {
+        $this->db->where('targetYear', $productionTargetData['targetYear']);
+        $result = $this->db->update('productiontarget', $productionTargetData);
+
+        return $result;
+    }
+
     public function queryProductionTargetByYear()
     {
         $year = date("Y");
+        $this->db->where('targetYear =', $year);
+        $result = $this->db->get('productiontarget');
+
+        return $result->row_array();
+    }
+
+    public function queryProductionTargetByInputYear($year)
+    {
         $this->db->where('targetYear =', $year);
         $result = $this->db->get('productiontarget');
 

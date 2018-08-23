@@ -42,7 +42,13 @@ class Productiontarget extends CI_Controller {
         $productionTargetData['quarterFourTotalWeight'] = $this->input->post('quarterFourTotalWeight');
         $productionTargetData['yearlyTotalWeight'] = $productionTargetData['quarterOneTotalWeight'] + $productionTargetData['quarterTwoTotalWeight'] + $productionTargetData['quarterThreeTotalWeight'] + $productionTargetData['quarterFourTotalWeight'];
 
-        $result = $this->productiontargetmodel->insertProductionTargetData($productionTargetData);
+        $queryTarget = $this->productiontargetmodel->queryProductionTargetByInputYear($productionTargetData['targetYear']);
+        if (isset($queryTarget['targetYear'])) {
+            $result = $this->productiontargetmodel->updateProductionTargetData($productionTargetData);
+        }
+        else {
+            $result = $this->productiontargetmodel->insertProductionTargetData($productionTargetData);
+        }
 
         if (true == $result) {
             echo json_encode($productionTargetData);

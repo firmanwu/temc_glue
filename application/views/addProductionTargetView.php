@@ -67,15 +67,15 @@ $(document).ready(function() {
 <form id="addProductionTargetForm">
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         生產目標年份
-        <input type="number" name="targetYear">
+        <input type="number" name="targetYear" required>
         第一季目標總重量
-        <input type="number" name="quarterOneTotalWeight">
+        <input type="number" name="quarterOneTotalWeight" required>
         第二季目標總重量
-        <input type="number" name="quarterTwoTotalWeight">
+        <input type="number" name="quarterTwoTotalWeight" required>
         第三季目標總重量
-        <input type="number" name="quarterThreeTotalWeight">
+        <input type="number" name="quarterThreeTotalWeight" required>
         第四季目標總重量
-        <input type="number" name="quarterFourTotalWeight">
+        <input type="number" name="quarterFourTotalWeight" required>
         <input type="submit" value="確定" data-role="button">
         <input type="reset" value="新增" data-role="button">
     </div>
