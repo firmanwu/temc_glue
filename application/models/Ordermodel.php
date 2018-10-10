@@ -113,6 +113,7 @@ class Ordermodel extends CI_Model {
         $this->db->select_sum('remainingWeight');
         $this->db->from('order');
         $this->db->where('product', $productID);
+        $this->db->where('complete', 0);
         $result = $this->db->get();
 
         return $result->row_array();
