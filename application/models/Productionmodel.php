@@ -26,7 +26,8 @@ class Productionmodel extends CI_Model {
         $this->db->join('order', 'production.order = order.orderID');
         $this->db->join('product', 'order.product = product.productID');
         $this->db->join('operator', 'production.operator = operator.operatorID');
-        $this->db->where('order.complete =', 0);
+        $this->db->where('order.remainingPackageNumber >', 0);
+        $this->db->order_by('production.order');
         $result = $this->db->get();
 
         return $result;
