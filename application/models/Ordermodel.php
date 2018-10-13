@@ -130,9 +130,9 @@ class Ordermodel extends CI_Model {
         return $result->row_array();
     }
 
-    public function deleteOrderData($orderData)
+    public function deleteOrderData($orderID)
     {
-        $this->db->where('orderID', $orderData['orderID']);
+        $this->db->where('orderID', $orderID);
         $result = $this->db->delete('order');
 
         return $result;

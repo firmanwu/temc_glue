@@ -27,7 +27,7 @@ function queryOrder() {
         success: function(result) {
             $('#queryOrderTable').remove();
             var row = JSON.parse(result);
-            var header = ["工單編號", "訂單編號", "交期", "內/外銷", "產品", "客戶", "包裝", "生產數量", "生產重量", "尚欠數量", "尚欠重量", "完成確認"];
+            var header = ["工單編號", "訂單編號", "交期", "內/外銷", "產品", "客戶", "包裝", "生產數量", "生產重量", "尚欠數量", "尚欠重量", "完成確認", "刪除"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryOrderTable');
             table.appendTo($('#queryOrderList'));
@@ -52,6 +52,14 @@ function queryOrder() {
                         var orderID = row[j][k];
                     }
 
+                    if ("expectingPackageNumber" == k) {
+                        var expectingPackageNumber = row[j][k];
+                    }
+
+                    if ("remainingPackageNumber" == k) {
+                        var remainingPackageNumber = row[j][k];
+                    }
+
                     if ("complete" == k) {
                         if ("0" == row[j][k]) {
                             // Create complete button
@@ -63,6 +71,22 @@ function queryOrder() {
                             td = $(document.createElement('td'));
                             completeButton.appendTo(td);
                             td.appendTo(tr);
+
+                            if (expectingPackageNumber == remainingPackageNumber) {
+                                // Create delete button
+                                var completeButton = $(document.createElement('button'));
+                                var onclickFunction = "deleteOrder(\"/order/deleteOrder/" + orderID + "\")";
+                                completeButton.attr({"class":"selfButtonR", "onclick":onclickFunction});
+                                completeButton.text("刪除");
+
+                                td = $(document.createElement('td'));
+                                completeButton.appendTo(td);
+                                td.appendTo(tr);
+                            }
+                            else {
+                                var td = $(document.createElement('td'));
+                                td.appendTo(tr);
+                            }
                         }
                         else {
                             var td = $(document.createElement('td'));

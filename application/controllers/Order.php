@@ -266,7 +266,6 @@ class Order extends CI_Controller {
     {
         $this->load->model('ordermodel');
 
-        $orderData['orderID'] = $orderID;
-        $result = $this->ordermodel->deleteOrderData($orderData);
+        $result = $this->ordermodel->deleteOrderData($orderID);
     }
 }
